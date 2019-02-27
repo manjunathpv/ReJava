@@ -33,6 +33,7 @@ public class Main {
             //creating socket and waiting for client connection
             //read from socket to ObjectInputStream object
             socket = server.accept();
+            System.out.println(socket.getInetAddress().getHostName());
             totalConnections++;
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             //convert ObjectInputStream object to String
@@ -46,7 +47,13 @@ public class Main {
             ois.close();
             oos.close();
             //terminate the server if client sends exit request
-            if(message.equalsIgnoreCase("exit")) break;
+            if(message.equalsIgnoreCase("exit"))
+            {
+                System.out.println("Client Connection close");
+                socket.close();
+                break;
+            }
+
         }
         //close the ServerSocket object
         System.out.println(totalConnections);

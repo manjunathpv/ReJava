@@ -23,19 +23,12 @@ public class Main {
         ObjectInputStream ois = null;
         Scanner in = new Scanner(System.in);
         System.out.println("Welcome to Java Home Client");
-        System.out.print("Type in you client name:");
-        String clientName = in.nextLine();
-        int i = 0;
+        System.out.println("You can start using your client");
         while (true) {
             //establish socket connection to server
             socket = new Socket(host.getHostName(), 5840);
-
             //write to socket using ObjectOutputStream
             oos = new ObjectOutputStream(socket.getOutputStream());
-            if(i==1) {
-                oos.writeObject("Connecting from client " + clientName);
-            }
-            i++;
             String message = in.nextLine();
             if (message.equalsIgnoreCase("exit")) {
                 oos.writeObject("exit");
