@@ -27,14 +27,17 @@ public class Main {
         System.out.println("Welcome to Home Java Server");
         System.out.println("Usage:");
         System.out.println("Type Exit to terminate the server");
+        int totalConnections = 0;
+        Socket socket = null;
         while(true){
             //creating socket and waiting for client connection
-            Socket socket = server.accept();
             //read from socket to ObjectInputStream object
+            socket = server.accept();
+            totalConnections++;
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             //convert ObjectInputStream object to String
             String message = (String) ois.readObject();
-            System.out.println("Message Received: " + message);
+            System.out.println(message);
             //create ObjectOutputStream object
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             //write object to Socket
@@ -42,13 +45,18 @@ public class Main {
             //close resources
             ois.close();
             oos.close();
-            socket.close();
             //terminate the server if client sends exit request
             if(message.equalsIgnoreCase("exit")) break;
         }
-        System.out.println("Shutting down Socket server!!");
         //close the ServerSocket object
-        server.close();
+        System.out.println(totalConnections);
+        String terminate = in.nextLine();
+        if(terminate.equalsIgnoreCase("exit"))
+        {
+            System.out.println("Shutting down Socket server!!");
+            server.close();
+        }
+
     }
 
 }

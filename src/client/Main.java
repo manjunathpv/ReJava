@@ -22,15 +22,22 @@ public class Main {
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
         Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to Java Home Client");
+        System.out.print("Type in you client name:");
+        String clientName = in.nextLine();
+
         while (true) {
             //establish socket connection to server
             socket = new Socket(host.getHostName(), 5840);
+
             //write to socket using ObjectOutputStream
             oos = new ObjectOutputStream(socket.getOutputStream());
-            System.out.println("Sending request to Socket Server");
+            oos.writeObject("Connecting from client " + clientName);
             String message = in.nextLine();
             if (message.equalsIgnoreCase("exit")) {
                 oos.writeObject("exit");
+                System.out.println("Your client will terminate now");
+                System.out.println("Bye");
                 break;
             } else oos.writeObject(message);
             //read the server response message
